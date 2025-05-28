@@ -1,0 +1,8 @@
+{
+    "location": "a bustling town in a fantasy world",
+    "inventory": [
+        "lantern",
+        "50 gold pieces"
+    ],
+    "current_loc_desc": "You are in the city center with people all around. To the North, there is the magic academy. To the West, the river and the King's palace. To the East, the slums. To the South, the shopping district.\n"
+}
