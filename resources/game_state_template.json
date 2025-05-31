@@ -1,0 +1,41 @@
+{
+    "player": {
+        "inventory": [],
+        "friends": [],
+        "enemies": [],
+        "accquaintances": null,
+        "current_location": null,
+        "money": 0
+    },
+    "map": [
+            {
+                "description": null,
+                "name": null,
+                "items": [],
+                "characters": [],
+                "north": null,
+                "south": null,
+                "west": null,
+                "east": null,
+                "up": null,
+                "down": null,
+                "parent": null,
+                "subs": []
+          }
+    ],
+    "characters": [
+        {
+            "name": null,
+            "description": null,
+            "occupation": null,
+            "home": null,
+            "friends": [],
+            "enemies": []
+        }
+    ],
+    "current scene": {
+        "location": null,
+        "description": null,
+        "characters": []
+    }
+}

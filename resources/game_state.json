@@ -1,8 +1,61 @@
 {
-    "location": "a bustling town in a fantasy world",
-    "inventory": [
-        "lantern",
-        "50 gold pieces"
+    "player": {
+        "inventory": [
+            "lantern"
+        ],
+        "friends": [],
+        "enemies": [],
+        "accquaintances": [
+            "Bob"
+        ],
+        "current_location": "Town Square",
+        "money": 50
+    },
+    "map": [
+        {
+            "name": "Town Square",
+            "description": "The Western edge of town gives way to the familiar sight of the central square. The sounds of chatter and commerce swell around you as you re-enter the open space. Merchants hawk their wares, children chase pigeons, and townsfolk hurry about their business. The aroma of freshly baked bread mixes with the scent of livestock from the nearby pens. The weapon shop, 'The Armory', stands prominently on the north side of the square. Its windows are filled with an impressive display of arms and armor. Shops selling everything from tools to textiles line the square, bustling with activity.",
+            "items": [],
+            "characters": [
+                "Bob"
+            ],
+            "north": "The Armory",
+            "south": null,
+            "east": "Eastern Street",
+            "west": "Western Street",
+            "up": null,
+            "down": null,
+            "parent": "Town",
+            "sub_locations": []
+        },
+        {
+            "name": "Town",
+            "description": "The Town stretches before you, a network of shops, houses, and public buildings lining a wide, cobbled street. People stream past, a constant flow of townsfolk going about their daily lives. A large notice board stands at the corner of the street, covered in various announcements and wanted posters. The midday sun glints off the tiled roofs of the buildings, creating a warm, inviting atmosphere.",
+            "items": [],
+            "characters": [],
+            "north": null,
+            "south": "Town Square",
+            "east": null,
+            "west": null,
+            "up": null,
+            "down": null,
+            "parent": "Town",
+            "sub_locations": []
+        }
     ],
-    "current_loc_desc": "{\n  \"Scene Description\": \"The bartender leans in closer, lowering his voice. He glances around before speaking, as if worried someone might be listening.\",\n  \"description\": \"The Western edge of town gives way to the familiar sight of the central square. The sounds of chatter and commerce swell around you as you re-enter the open space. Merchants hawk their wares, children chase pigeons, and townsfolk hurry about their business. The aroma of freshly baked bread mixes with the scent of livestock from the nearby pens. You just finished a filling meal, and the world feels a little brighter. A burly bartender with a handlebar mustache polishes glasses behind a well-stocked bar, seemingly eager to share any tidbits of information he\u2019s picked up.\",\n  \"name\": \"Town Square\",\n  \"inventory\": [\n    \"lantern\",\n    \"50 gold pieces\"\n  ],\n  \"items\": [],\n  \"characters\": [\n    \"bartender\"\n  ],\n  \"north\": \"Town\",\n  \"south\": null,\n  \"west\": \"Western Street\",\n  \"east\": \"Eastern Street\",\n  \"up\": null,\n  \"down\": null,\n  \"parent\": \"Town\",\n  \"subs\": []\n}"
+    "characters": [
+        {
+            "name": "Bob",
+            "description": "An ordinary man passing out newspaper",
+            "occupation": "Newspaper salesman",
+            "home": "Town Square",
+            "friends": [],
+            "enemies": []
+        }
+    ],
+    "current scene": {
+        "location": "",
+        "description": "You are standing in town.",
+        "characters": []
+    }
 }

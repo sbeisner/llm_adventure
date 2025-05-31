@@ -1,18 +1,19 @@
 import requests
 import os
 import json
-import location as Loc
-
+from model.location import Location
+from model.player import Player
 # Define the initial game state
 default_game_state = {
     "location": "a dark forest",
     "inventory": ["lantern", "rusty key"],
     "current_loc_desc": "You are in a dark forest with a narrow path leading north and a cave entrance to the east."
 }
+game_state_path = 'resources/game_state.json'
 
 def load_game_state():
-    if os.path.exists('resources/game_state.json'):
-        with open('resources/game_state.json', 'r') as f:
+    if os.path.exists(game_state_path):
+        with open(game_state_path, 'r') as f:
             return json.load(f)
     return default_game_state
 
@@ -45,43 +46,70 @@ def clean_llm_json_response(response):
     cleaned = response.strip().strip('`')
     if cleaned.lower().startswith("json"):
         cleaned = cleaned[4:].strip()
+    cleaned = cleaned.replace('None','null')
     return cleaned
 
 def save_game_state(game_state):
-    with open('resources/game_state.json', 'w') as f:
+    with open(game_state_path, 'w') as f:
         json.dump(game_state, f, indent=4)
 
-# Function to generate prompt based on game state and player input
-def generate_prompt(game_state, player_input):
-    prompt = f"""You are the narrator of a text adventure game.
-The player is carrying {', '.join(game_state['inventory'])}.
+def update_map(location):
+    # Load the current game state
+    with open(game_state_path, 'r') as f:
+        game_state = json.load(f)
 
-Current scene: {game_state['current_loc_desc']}
+    # Check if the location already exists in the map
+    location_exists = False
+    for i, loc in enumerate(game_state['map']):
+        if loc['name'] == location.name:
+            game_state['map'][i] = location.to_dict()
+            location_exists = True
+            break
+    game_state['player']['current_location'] = location.name
+    # If the location does not exist, add it to the map
+    if not location_exists:
+        game_state['map'].append(location.to_dict())
+
+    # Save the updated game state back to the file
+    with open(game_state_path, 'w') as f:
+        json.dump(game_state, f, indent=4)
+
+def update_player(new_player):
+    # Load the current game state
+    with open(game_state_path, 'r') as f:
+        game_state = json.load(f)
+
+    # Replace the 'player' section with the new Player object's dictionary
+    game_state['player'] = new_player.to_dict()
+
+    # Save the updated game state back to the file
+    with open(game_state_path, 'w') as f:
+        json.dump(game_state, f, indent=4)
+
+
+# Function to generate prompt based on game state and player input
+def generate_prompt(game_state, player_input, prompt_format):
+   # print(game_state)
+    current_location = [game_state['map'][i]
+                    if game_state['map'][i]['name'] == game_state['player']['current_location']
+                    else Location(name=game_state['player']['current_location'])
+                    for i in range(len(game_state['map']))
+                    ]
+    prompt = f"""You are the narrator of a text adventure game.
+The player is carrying {', '.join(game_state['player']['inventory'])}.
+Current Location: {current_location}
+Current scene: {game_state['current scene']['description']}
 
 Player input: "{player_input}"
 
-Please generate a json response for the Location in the following format. I need to convert this directly to a python dictionary,
-so please don't deviate from this formatting:
-Scene Description: A description of the current scene in reaction to the most recent player input.
-description: A vivid description of the current location including what is in the surrounding area with a focus on interesting details to draw the player in
-name: The name of the current location. This could be as simple as a vast desert or as specific as the actual name of a tavern.
-inventory: As a list, the items currently in the player's inventory.
-items: As an optionally null list, items in this location that the player could take (legally or illegally)
-characters: As a list, the characters currently in this location.
-north: Location directly to the North (if applicable)
-south: Location directly to the South (if applicable)
-west: Location directly to the West (if applicable)
-east: Location directly to the East (if applicable)
-up: Location directly vertical (if applicable)
-down: Location directly beneath (if applicable)
-parent: The parent location (i.e. if a tavern is in a city or a city is in a kingdom)
-subs: As a list, any sub_locations"""
+{prompt_format}
+"""
     return prompt
 
 # Main game loop
 def game_loop():
     game_state = load_game_state()
-    print("\n" + game_state["current_loc_desc"])
+    print(game_state["current scene"]["description"])
     while True:
         player_input = input("What do you want to do?\n")
 
@@ -89,16 +117,19 @@ def game_loop():
             print("Thanks for playing!")
             break
 
-        prompt = generate_prompt(game_state, player_input)
-        llm_response = clean_llm_json_response(get_llm_response(prompt))
-        location_dict = json.loads(llm_response)
-        location = Loc.Location.from_dict(location_dict)
+        loc_prompt = generate_prompt(game_state, player_input, Location.loc_prompt)
+        llm_response_loc = clean_llm_json_response(get_llm_response(loc_prompt))
+        location_dict = json.loads(llm_response_loc)
+        location = Location.from_dict(location_dict)
         print(location)
-        print()
-        print(location_dict['Scene Description'])
-        print()
-        game_state["current_loc_desc"] = llm_response  # Update scene
-        save_game_state(game_state)
+        update_map(location)
+
+        player_prompt = generate_prompt(game_state, player_input, Player.player_prompt)
+        llm_response_player = clean_llm_json_response(get_llm_response(player_prompt))
+        player_dict = json.loads(llm_response_player)
+        player = Player.from_dict(player_dict)
+        print('Inventory: ' + player.inventory)
+        update_player(player)
 
 if __name__ == "__main__":
     game_loop()
