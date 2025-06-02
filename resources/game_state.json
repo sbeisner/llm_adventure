@@ -5,24 +5,21 @@
         ],
         "friends": [],
         "enemies": [],
-        "accquaintances": [
-            "Bob"
-        ],
-        "current_location": "Town Square",
-        "money": 50
+        "restrictions": null,
+        "acquaintances": [],
+        "money": 10,
+        "current_location": "Smithy"
     },
     "map": [
         {
             "name": "Town Square",
-            "description": "The Western edge of town gives way to the familiar sight of the central square. The sounds of chatter and commerce swell around you as you re-enter the open space. Merchants hawk their wares, children chase pigeons, and townsfolk hurry about their business. The aroma of freshly baked bread mixes with the scent of livestock from the nearby pens. The weapon shop, 'The Armory', stands prominently on the north side of the square. Its windows are filled with an impressive display of arms and armor. Shops selling everything from tools to textiles line the square, bustling with activity.",
+            "description": "You find yourself in the Town Square. A wide expanse of cobblestone, the square is a bustling hub of activity. Merchants hawk their wares from stalls lining the perimeter, while townsfolk mill about, chatting and trading. A grand fountain, depicting a mythical griffin, stands proudly in the center of the square, its waters shimmering in the midday sun. To the east stands a sturdy stone library, its arched windows promising a wealth of knowledge within. A small, well-worn path leads west, presumably towards the residential area of town.",
             "items": [],
-            "characters": [
-                "Bob"
-            ],
-            "north": "The Armory",
+            "characters": [],
+            "north": "Town",
             "south": null,
-            "east": "Eastern Street",
-            "west": "Western Street",
+            "east": "Library",
+            "west": "Residential Area",
             "up": null,
             "down": null,
             "parent": "Town",
@@ -30,13 +27,45 @@
         },
         {
             "name": "Town",
-            "description": "The Town stretches before you, a network of shops, houses, and public buildings lining a wide, cobbled street. People stream past, a constant flow of townsfolk going about their daily lives. A large notice board stands at the corner of the street, covered in various announcements and wanted posters. The midday sun glints off the tiled roofs of the buildings, creating a warm, inviting atmosphere.",
+            "description": "The Town stretches before you, a network of shops, houses, and public buildings lining a wide, cobbled street. People stream past, a constant flow of townsfolk going about their daily lives. A large notice board stands at the corner of the street, covered in various announcements and wanted posters. The midday sun glints off the tiled roofs of the buildings, creating a warm, inviting atmosphere. The rhythmic clang of a hammer on metal grows louder as you approach the town's smithy, a sturdy building with smoke billowing from its chimney. The smithy's door is slightly ajar.",
+            "items": [],
+            "characters": [
+                "Smith"
+            ],
+            "north": null,
+            "south": "Town Square",
+            "east": "Smithy",
+            "west": null,
+            "up": null,
+            "down": null,
+            "parent": "Town",
+            "sub_locations": []
+        },
+        {
+            "name": "The Armory",
+            "description": "The Armory is a sturdy stone building, its facade dominated by large, reinforced windows showcasing an impressive array of weaponry and armor. Polished steel gleams under the light, and the rhythmic clang of a blacksmith's hammer echoes from within. The air smells of coal and hot metal. A sign above the door reads, 'The Armory - Steel for Every Need!'",
             "items": [],
             "characters": [],
             "north": null,
             "south": "Town Square",
             "east": null,
             "west": null,
+            "up": null,
+            "down": null,
+            "parent": "Town Square",
+            "sub_locations": []
+        },
+        {
+            "name": "Smithy",
+            "description": "The Smithy is a sturdy building, its stone walls blackened with soot. A large, open doorway reveals a flurry of activity within \u2013 sparks fly as the smith works at his forge, hammering glowing metal into shape. The air is thick with the smell of coal smoke and hot iron. Various finished tools and weapons hang from the walls, glinting in the light. A burly figure, presumably the smith, is bent over his work, sweat dripping from his brow. A small anvil sits outside the doorway.",
+            "items": [],
+            "characters": [
+                "Smith"
+            ],
+            "north": null,
+            "south": null,
+            "east": null,
+            "west": "Town",
             "up": null,
             "down": null,
             "parent": "Town",
@@ -54,8 +83,11 @@
         }
     ],
     "current scene": {
-        "location": "",
-        "description": "You are standing in town.",
-        "characters": []
+        "description": "The Smith grunts as he accepts the gold. \"A fair price,\" he says, handing you three wickedly sharp daggers. They feel surprisingly light and balanced in your hands. \"They'll serve you well enough,\" he adds, returning to his work. He wipes his brow again, a flicker of concern in his eyes. \"You're looking a little pale. This heat is oppressive, even for me. Best be getting back out into the open air soon...\" \n\nYou now have: 3 daggers\n\n**Warning:** You're starting to feel the strain of this adventure. Stay sharp and resolve any dangerous situations quickly. Your Heat level is rising.",
+        "location": "Smithy",
+        "characters": [
+            "Smith"
+        ],
+        "heat": 4
     }
 }

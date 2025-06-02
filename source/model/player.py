@@ -9,12 +9,13 @@ class Player:
                     items: As an optionally null list, items in this location that the player could take (legally or illegally)
                     enemies: As an optionally null list, any characters the player has met with whom they are enemies.
                     friends: As an optionally null list, any characters with whom the player is friendly and has earned their trust.
+                    current_location: The name of the location the player is currently in.
                     money: The player's current money on hand (in gold pieces). Money cannot go below 0.'''
 
-    def __init__(self,inventory, restrictions, acquaintences, enemies, friends, money):
+    def __init__(self,inventory, restrictions, acquaintances, enemies, friends, money):
         self.restrictions = restrictions
         self.inventory = inventory if inventory is not None else []
-        self.acquaintances = acquaintences if acquaintences is not None else []
+        self.acquaintances = acquaintances if acquaintances is not None else []
         self.enemies = enemies if enemies is not None else []
         self.friends = friends if friends is not None else []
         self.money = money if money is not None else 0
